@@ -14,10 +14,9 @@
         <tbody>
             {% for rol in roles %}
                 <tr>
-                   {#  <td>
-                        <a href="{% url 'descuento_ver' rol.pk %}">{{ rol.persona.cedula }}</a>
-                    </td> #}
-                    <td>{{ rol.persona.cedula }}</td>
+                   <td>
+                        <a href="{% url 'ver_detalle_rol' rol.pk %}">{{ rol.persona.cedula }}</a>
+                    </td>
                     <td>{{ rol.persona }}</td>
                     <td>{{ rol.persona.sueldo }}</td>
                     <td>{{ rol.persona.tipo }}</td>

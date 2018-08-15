@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div>
+        <p class="display-4">DESCUENTOS</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Descuento</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for des in descuentos %}
+                    <tr>
+                        <td>{{ des.descuento.nombre }}</td>
+                        <td>{{ des.valor }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <p class="display-4">INGRESOS</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ingreso</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ing in ingresos %}
+                    <tr>
+                        <td>{{ ing.ingreso.nombre }}</td>
+                        <td>{{ ing.valor }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

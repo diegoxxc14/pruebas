@@ -6,18 +6,20 @@
             <thead>
                 <tr>
                     <th>PERIODO</th>
-                    <th>FECHA GENERADO</th>
+                    <th>DÍAS LABORABLES</th>
+                    <th>FECHA EMISIÓN</th>
                 </tr>
             </thead>
             <tbody>
                 {% for periodo in periodos %}
                     <tr>
                         <td>
-                            {# <a href="{% url 'rol_ver' periodo.pk %}">
+                            <a href="{% url 'ver_roles' periodo.pk %} ">
                                 {{ periodo }}
-                            </a> #}
+                            </a>
                         </td>
-                        <td>{{ periodo.fechaCreacion }}</td>
+                        <td>{{ periodo.max_dias }}</td>
+                        <td>{{ periodo.fecha_emision }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

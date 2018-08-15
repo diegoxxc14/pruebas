@@ -1,40 +1,58 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from app_libros.forms import BookForm, PeriodoForm
+from app_libros.forms import PeriodoForm
 from django.shortcuts import get_list_or_404, get_object_or_404
-from app_libros.models import Persona, Rol_Pago, Descuento, Descuento_Rol, Periodo_Rol
+from app_libros.models import Persona, Rol_Pago, Descuento, Descuento_Rol, Periodo_Rol, Ingreso, Ingreso_Rol
 from decimal import Decimal
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def inicio(request):
     #return HttpResponse("Hola mundo")
     return render(request, 'libros/index.html')
 
-def libro_view(request):
-    if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect('book:inicio')
-    else:
-        form = BookForm()
+def calcular_iess_view(rolPago, valor_empleado = Decimal(11.45), valor_trabajador = Decimal(9.45)):
+    sueldo_base = rolPago.persona.sueldo
 
-    return render(request, 'libros/libros_form.html',{'form':form})
-#
-# def calcularIees_view(rolPago, valor_empleado = Decimal(11.45), valor_trabajador = Decimal(9.45)):
-#     pk_descuento = get_object_or_404(Descuento, nombre='IEES').pk
-#     descuento_iees = rolPago.persona.sueldo
-#     if rolPago.persona.tipo == 'trabajador':
-#         descuento_iees = (descuento_iees * valor_trabajador)/100
-#     elif rolPago.persona.tipo == 'empleado':
-#         descuento_iees = (descuento_iees * valor_empleado)/100
-#     dr = Descuento_Rol(
-#         rolPago_id=rolPago.pk,
-#         descuento_id=pk_descuento,
-#         valor=descuento_iees
-#     )
-#     dr.save()
-#
+    if rolPago.persona.tipo == 'trabajador':
+        return (sueldo_base * valor_trabajador)/100
+    elif rolPago.persona.tipo == 'empleado':
+        return (sueldo_base * valor_empleado)/100
+
+def cargar_sueldo_view(rolPago):
+    pk_ingreso = get_object_or_404(Ingreso, nombre='SUELDO').pk
+    sueldo_base = rolPago.persona.sueldo
+
+    ir = Ingreso_Rol(
+        rol_pago_id=rolPago.pk,
+        ingreso_id=pk_ingreso,
+        valor=sueldo_base
+    )
+    ir.save()
+
+def generar_ingresos_view(rolPago):
+    ingresos = get_list_or_404(Ingreso, activo=True)
+
+    for ingreso in ingresos:
+        ir = Ingreso_Rol(
+            rol_pago_id=rolPago.pk,
+            ingreso_id=ingreso.pk,
+        )
+        if ingreso.nombre == 'SUELDO':#Cambiamos el valor de default
+            ir.valor = rolPago.persona.sueldo
+        ir.save()
+
+def generar_descuentos_view(rolPago):
+    descuentos = get_list_or_404(Descuento, activo=True)
+
+    for descuento in descuentos:
+        dr = Descuento_Rol(
+            rol_pago_id=rolPago.pk,
+            descuento_id=descuento.pk,
+        )
+        if descuento.nombre == 'IESS':#Cambiamos el valor de default
+            dr.valor = calcular_iess_view(rolPago)
+        dr.save()
+
 def generar_roles_view(empleados,pk_periodo):
     for emp in empleados:
         rp = Rol_Pago(
@@ -42,9 +60,13 @@ def generar_roles_view(empleados,pk_periodo):
             persona_id = emp.pk,
             periodo_rol_id = pk_periodo)
         rp.save()
-        #calcularIees_view(rp)
+
+        generar_ingresos_view(rp)  # cargamos los ingresos activos al Rol
+        generar_descuentos_view(rp)#generamos los descuentos al Rol
+
     return get_list_or_404(Rol_Pago, periodo_rol=pk_periodo)
-#
+
+@login_required()
 def crear_periodo_view(request):
     if request.method == 'POST':
         form = PeriodoForm(request.POST)
@@ -58,15 +80,17 @@ def crear_periodo_view(request):
     else:
         form = PeriodoForm()
     return render(request, 'libros/periodo_form.html',{'form': form})
-#
-# def periodo_detalle_view(request):
-#     p = get_list_or_404(Periodo_Rol)
-#     return render(request, 'libros/periodo_ver.html',{'periodos':p})
-#
-# def rol_detalle_view(request, pk):
-#     r = get_list_or_404(Rol_Pago, periodo_rol_id=pk)
-#     return render(request, 'libros/roles_generar.html', {'periodo':get_object_or_404(Periodo_Rol,pk=pk),'roles':r})
-#
-# def descuento_view(request, pk):
-#     d = get_list_or_404(Descuento_Rol, rolPago_id=pk)
-#     return render(request, 'libros/descuentos_ver.html',{'descuentos':d})
+
+def ver_periodos_view(request):
+    p = get_list_or_404(Periodo_Rol)
+    return render(request, 'libros/periodo_ver.html',{'periodos':p})
+
+def ver_roles_view(request, pk):
+    r = get_list_or_404(Rol_Pago, periodo_rol_id=pk)
+    p = get_object_or_404(Periodo_Rol, pk=pk)
+    return render(request, 'libros/roles_generar.html', {'periodo':p,'roles':r})
+
+def ver_detalle_rol_view(request, pk):
+    des = get_list_or_404(Descuento_Rol, rol_pago_id=pk)
+    ing = get_list_or_404(Ingreso_Rol, rol_pago_id=pk)
+    return render(request, 'libros/detalle_rol.html', {'descuentos':des, 'ingresos':ing})
