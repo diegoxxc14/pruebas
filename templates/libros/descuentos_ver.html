@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>IEES</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for descuento in descuentos %}
+                    <tr>
+                        <td>{{ descuento.valor }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

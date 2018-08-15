@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>PERIODO</th>
+                    <th>FECHA GENERADO</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for periodo in periodos %}
+                    <tr>
+                        <td>
+                            {# <a href="{% url 'rol_ver' periodo.pk %}">
+                                {{ periodo }}
+                            </a> #}
+                        </td>
+                        <td>{{ periodo.fechaCreacion }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

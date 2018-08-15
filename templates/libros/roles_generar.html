@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <h3 class="display-3">{{ periodo }}</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Cédula</th>
+                <th>Nombres</th>
+                <th>Sueldo base</th>
+                <th>Tipo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rol in roles %}
+                <tr>
+                   {#  <td>
+                        <a href="{% url 'descuento_ver' rol.pk %}">{{ rol.persona.cedula }}</a>
+                    </td> #}
+                    <td>{{ rol.persona.cedula }}</td>
+                    <td>{{ rol.persona }}</td>
+                    <td>{{ rol.persona.sueldo }}</td>
+                    <td>{{ rol.persona.tipo }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form }}#}
+{#<button type="submit" class="btn btn-primary">Save</button>#}
+{#</form>#}
+{% endblock %}
