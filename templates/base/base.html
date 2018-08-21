@@ -37,11 +37,13 @@
     {% endblock %}
 
     {% block footer %}
-        <h6 class="text-center">Todos los derechos reservados</h6>
+        <h6 class="card-footer">&copy Todos los derechos reservados</h6>
     {% endblock %}
 
-    <script src="{% static 'js/jquery_v3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block javascript %}
+        <script src="{% static 'js/jquery_v3.3.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% endblock %}
 
     {{ form.media.js }}
 </body>

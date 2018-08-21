@@ -1,42 +1,120 @@
 {% extends 'base/base.html' %}
+{% load staticfiles %}
 
 {% block content %}
-    <div>
-        <p class="display-4">DESCUENTOS</p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Descuento</th>
-                    <th>Valor</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for des in descuentos %}
-                    <tr>
-                        <td>{{ des.descuento.nombre }}</td>
-                        <td>{{ des.valor }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="container">
+        <div class="row">
+                <span>Días trabajados</span>
+                <input id="dias_trabajo" class="form-control" value="{{ rol.dias_trabajados }}"/>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="display-4">INGRESOS</p>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Partida</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ing in ingresos %}
+                            <tr>
+                                <td>{{ ing.ingreso.nombre }}</td>
+                                <td>
+                                    <input id="ing_{{ ing.ingreso.pk }}" class="form-control" value="{{ ing.valor }}" readonly/>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <p class="display-4">DESCUENTOS</p>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Descuento</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for des in descuentos %}
+                            <tr>
+                                <td>{{ des.descuento.nombre }}</td>
+                                <td>
+                                    <input id="des_{{ des.descuento.pk }}" class="form-control" value="{{ des.valor }}" readonly/>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <p class="display-4">MÁS DETALLES</p>
+        <div class="row">
+            <div class="col">
+                <span>Total Ingresos</span>
+               <input class="form-control" value="{{ rol.total_ingresos }}" readonly/>
+            </div>
+            <div class="col">
+                <span>Total Descuentos</span>
+              <input class="form-control" value="{{ rol.total_descuentos }}" readonly/>
+            </div>
+
+            <div class="col">
+                <span>Aporte Patronal</span>
+                <input id="iess_patronal" class="form-control" value="{{ rol.aporte_patronal }}" readonly/>
+            </div>
+            <div class="col">
+                <span>Total a pagar</span>
+              <input class="form-control" value="{{ rol.total_pagar }}" readonly/>
+            </div>
+        </div>
+
     </div>
-    <div>
-        <p class="display-4">INGRESOS</p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Ingreso</th>
-                    <th>Valor</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ing in ingresos %}
-                    <tr>
-                        <td>{{ ing.ingreso.nombre }}</td>
-                        <td>{{ ing.valor }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+
+{% endblock %}
+{% block javascript %}
+    {{ block.super }}
+    <script>
+        $(function () {
+
+            const DIAS_MES = 30;
+            const IESS_EMPLEADO = 11.45;
+            const IESS_TRABAJADOR = 9.45;
+            const IESS_PATRONAL = 11.15;
+
+            sueldo_base = parseFloat($("#ing_1").val().replace(",","."));    //Capturamos el sueldo una sola vez
+
+            $("#dias_trabajo").keyup(function () {
+                dias_trabajados = parseInt($("#dias_trabajo").val());
+                if (!isNaN(dias_trabajados)){
+                    remuneracion = redondear_2_dec((dias_trabajados * sueldo_base) / DIAS_MES);
+                    $("#ing_1").val(remuneracion.toString().replace(".",","));
+                }else{
+                    remuneracion = 0;
+                    $("#ing_1").val("0,00");
+                }
+                cal_iess_personal(remuneracion);
+                cal_iess_patronal(remuneracion);
+            });
+
+            function cal_iess_personal(remun) {//Falta la condición de empleado o trabajador
+                iess_personal = redondear_2_dec((remun * IESS_TRABAJADOR)/100)
+                iess_personal = redondear_2_dec((remun * IESS_EMPLEADO)/100)
+                $("#des_1").val(iess_personal.toString().replace(".",","));
+            }
+
+            function cal_iess_patronal(remun) {
+                iess_patronal = redondear_2_dec((remun * IESS_PATRONAL)/100)
+                $("#iess_patronal").val(iess_patronal.toString().replace(".",","));
+            }
+
+            function redondear_2_dec(num) {
+                return Math.round(num * 100) / 100
+            }
+        });
+    </script>
 {% endblock %}
