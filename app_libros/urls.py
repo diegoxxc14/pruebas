@@ -9,4 +9,9 @@ urlpatterns = [
     url(r'^ver_periodos$', views.ver_periodos_view, name='ver_periodos'),
     url(r'^ver_roles/(?P<pk>\d+)$', views.ver_roles_view, name='ver_roles'),
     url(r'^ver_detalle_rol/(?P<pk>\d+)$', views.ver_detalle_rol_view, name='ver_detalle_rol'),
+
+    url(r'^personas/listar$', views.ver_personas.as_view(), name='listar_personas'),
+    url(r'^personas/load/$', views.load_personas_ajax.as_view(), name='ver_personas'),
+    url(r'^persona/delete/$', views.delete_persona_ajax.as_view(), name='del_persona'),
+    url(r'^personas/delete/$', views.delete_personas_ajax.as_view(), name='del_personas'),
 ]

@@ -6,11 +6,14 @@ from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+from app_prestamo.models import Valor_Rol
+
+
 def inicio(request):
     #return HttpResponse("Hola mundo")
     return render(request, 'libros/index.html')
 
-def cal_iess_personal(rolPago, valor_empleado = Decimal(11.45), valor_trabajador = Decimal(9.45)):
+def cal_iess_personal(rolPago, valor_empleado, valor_trabajador):
     ing_rol = get_object_or_404(Ingreso_Rol, rol_pago=rolPago.pk, ingreso=1)
 
     if rolPago.persona.tipo == 'trabajador':
@@ -19,7 +22,7 @@ def cal_iess_personal(rolPago, valor_empleado = Decimal(11.45), valor_trabajador
         return (ing_rol.valor * valor_empleado)/100
 
 
-def cal_iess_patronal(rolPago, valor = Decimal(11.15)):
+def cal_iess_patronal(rolPago, valor):
     ing_rol = get_object_or_404(Ingreso_Rol, rol_pago=rolPago.pk, ingreso=1)
     return (ing_rol.valor * valor)/100
 
@@ -37,7 +40,7 @@ def generar_ingresos(rolPago):
         ir.save()
 
 
-def generar_descuentos(rolPago):
+def generar_descuentos(rolPago, iess_per_empleado, iess_per_trabajador):
     descuentos = get_list_or_404(Descuento, activo=True)
 
     for descuento in descuentos:
@@ -46,11 +49,18 @@ def generar_descuentos(rolPago):
             descuento_id=descuento.pk,
         )
         if descuento.pk == 1 and rolPago.dias_trabajados != 0:# Id 1 para el iess (OJO)
-            dr.valor = cal_iess_personal(rolPago)
+            dr.valor = cal_iess_personal(rolPago, iess_per_empleado, iess_per_trabajador)
         dr.save()
 
 
 def generar_roles(empleados, pk_periodo):
+    valores_rol = get_list_or_404(Valor_Rol)
+    SUELDO_BASICO = valores_rol[0].valor
+    FONDO_RESERVA = valores_rol[1].valor
+    IESS_PER_EMP = valores_rol[2].valor
+    IESS_PER_TRA = valores_rol[3].valor
+    IESS_PATRONAL = valores_rol[4].valor
+
     for emp in empleados:
         rp = Rol_Pago(
             persona_id = emp.pk,
@@ -61,10 +71,10 @@ def generar_roles(empleados, pk_periodo):
         rp.save()
 
         generar_ingresos(rp)   # cargamos los ingresos activos al Rol
-        generar_descuentos(rp) #generamos los descuentos al Rol
+        generar_descuentos(rp, Decimal(valores_rol[2].valor), Decimal(valores_rol[3].valor)) #generamos los descuentos al Rol
 
         if emp.tipo != 'contratado':    #El Rol del contratado se genera en 0
-            cal_rol_pago(rp)
+            cal_rol_pago(rp, Decimal(valores_rol[4].valor))
 
     return get_list_or_404(Rol_Pago, periodo_rol=pk_periodo)
 
@@ -100,10 +110,10 @@ def ver_detalle_rol_view(request, pk):
     ing = get_list_or_404(Ingreso_Rol, rol_pago_id=pk)
     return render(request, 'libros/detalle_rol.html', {'descuentos':des, 'ingresos':ing, 'rol':rolPago})
 
-def cal_rol_pago(rolPago):
+def cal_rol_pago(rolPago, valor_iess_patronal):
     ingresos_rol = get_list_or_404(Ingreso_Rol, rol_pago=rolPago.pk)
     descuentos_rol = get_list_or_404(Descuento_Rol, rol_pago=rolPago.pk)
-    iess_patronal = cal_iess_patronal(rolPago)
+    iess_patronal = cal_iess_patronal(rolPago, valor_iess_patronal)
 
     sum_ingresos = cal_total(ingresos_rol)
     sum_descuentos = cal_total(descuentos_rol)
@@ -120,3 +130,52 @@ def cal_total(valores_rol):    #Calcula el total de ingresos y egresos
     for valor_rol in valores_rol:
         sum_total+=valor_rol.valor
     return sum_total
+
+# def ver_personas(request, template_name='libros/DataTable.html'):
+#     personas = get_list_or_404(Persona)
+#     return render(request, template_name,{'personas':personas})
+
+
+from django.views.generic import ListView, DeleteView, TemplateView
+from app_prestamo.models import *
+from django.core import serializers
+from django.http import HttpResponse
+import json
+# class ver_personas(ListView):
+#     model = Persona
+#     template_name = 'libros/DataTable.html'
+#     context_object_name = 'personas'
+
+class ver_personas(ListView):
+    model = Person
+    template_name = 'libros/DataTable.html'
+    context_object_name = 'personas'
+
+class load_personas_ajax(TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        list_personas = get_list_or_404(Person)
+        data = serializers.serialize('json',list_personas)
+        return HttpResponse(data, content_type='application/json')
+
+class delete_persona_ajax(TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        id_per = request.GET['id']
+        if int(id_per) != 0:
+            per_remove = Person.objects.get(pk=id_per)
+            per_remove.delete()
+        list_personas = get_list_or_404(Person)
+        data = serializers.serialize('json',list_personas)
+        return HttpResponse(data, content_type='application/json')
+
+class delete_personas_ajax(TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        ids_per = json.loads(request.GET['pks'])#cargo el valor de GET como una lista
+        personas_remove = Person.objects.filter(pk__in=ids_per)
+        personas_remove.delete()
+
+        #list_personas = get_list_or_404(Person)
+        #data = serializers.serialize('json',list_personas)
+        return HttpResponse(request)

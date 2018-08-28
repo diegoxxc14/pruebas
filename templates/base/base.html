@@ -3,9 +3,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <title>{% block title %} Base 1 {% endblock %}</title>
+
+    {% block css %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% endblock %}
 
     {{ form.media.css }}
 

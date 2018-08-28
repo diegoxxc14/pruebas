@@ -27,7 +27,7 @@ class Periodo_Rol(models.Model):
 
 
 class Rol_Pago(models.Model):
-    persona = models.ForeignKey(Persona, on_delete=models.PROTECT, verbose_name="Partida", blank=False, null=True,
+    persona = models.ForeignKey(Persona, on_delete=models.CASCADE, verbose_name="Partida", blank=False, null=True,
                                 related_name='partida_rol') #Temporal, equivalente a la partida
     periodo_rol = models.ForeignKey(Periodo_Rol, on_delete=models.CASCADE, verbose_name='Periodo')
 
