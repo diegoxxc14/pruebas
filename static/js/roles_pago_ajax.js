@@ -1,9 +1,10 @@
-
 $(document).ready(function () {
-    var tabla;//DataTable global
+    var tabla;  //DataTable global
+    var numRolesSel = 0;
+    var filas, lista_pk;
 
     $.ajax({
-        url: "/libros/personas/load/",//url: "{% url 'ver_personas' %}",
+        url: "/libros/roles_pago/load/",//url: "{% url 'cargar_rolesPago' %}",
         success: function (data) {
             tabla = $('#tabla_persona').DataTable({
                 "processing":true,
@@ -41,41 +42,39 @@ $(document).ready(function () {
     });
 
 
-    function deletePer(pk, fila_delete){
+    function quitarRolesPago(lista_pk, filas_delete){
         $.ajax({
-            data: {'id':pk},
-            url: "/libros/persona/delete/",//url: "{% url 'del_persona' %}",
-            type: 'get',
-            success: function (data) {//Si se elimina correctamente, lo quitamos de la tabla
-                fila_delete.remove().draw( false );
-                $('#roles_sel').text("")
-            },
-            error: function () {
-                alert("Algo salió mal.. Ups")
-            }
-        });
-    }
-
-    function deletePersonas(lista_pk, filas_delete){
-        $.ajax({
-            data: {'pks':JSON.stringify(lista_pk)},//Paso el array de datos seleccionados como JSON
-            url: "/libros/personas/delete/",//url: "{% url 'del_personas' %}",
-            type: 'get',
-            success: function () {//Si se eliminan correctamente, los quitamos de la tabla
-                filas_delete.remove().draw(false);
+            data: {'pks':JSON.stringify(lista_pk)}, //Paso el array de datos seleccionados como JSON
+            url: "/libros/roles_pago/delete/",    //url: "{% url 'remover_rolesPago' %}",
+            type: 'post',
+            success: function () {  //Si _todo sale bien
+                filas_delete.remove().draw(false);  //Eliminar las filas de la tabla
                 $('#roles_sel').text("");
+                $('#btnEliminarSel').attr('disabled','true');   //Desactivar le boton de eliminar
+                verMensajeModal("Los Roles de Pago se han eliminado con éxito.", "alert alert-success");
             },
-            error: function () {
-                alert("Algo salió mal.. Ups");
+            error: function () {    //Si algo sale mal
+                verMensajeModal("Ups, algo salió mal..", "alert alert-danger");
             }
         });
     }
 
-    // $('#tabla_persona tbody').on( 'click', 'button', function () {
-    //     var fila = tabla.row($(this).parents('tr'));
-    //     var dato_json = fila.data();
-    //     deletePer(dato_json.pk, fila);
-    // });
+
+    function guardarRolPago(newRolPago){
+        $.ajax({
+            data: {'rol_pago':JSON.stringify(newRolPago)}, //Paso el array de datos seleccionados como JSON
+            url: "/libros/roles_pago/create/",    //url: "{% url 'crear_rolesPago' %}",
+            type: 'post',
+            success: function (data) {  //Si _todo sale bien
+                tabla.rows.add(data).draw(false);   //Agrego la fila en la tabla
+                verMensajeModal("Rol de Pago guardado con éxito.", "alert alert-success");
+            },
+            error: function () {    //Si algo sale mal
+                verMensajeModal("Ups, algo salió mal..", "alert alert-danger");
+            }
+        });
+    }
+
 
     $('#tabla_persona tbody').on( 'click', '.btnEditar', function () {
         var fila = tabla.row($(this).parents('tr'));
@@ -103,58 +102,84 @@ $(document).ready(function () {
         );
 
         $('#editRolPagoModal').modal('show');
-
-
     });
 
-
-    var numRolesSel;
 
     $('#tabla_persona tbody').on('click', 'tr', function () {//Seleccionar la filas
         $(this).toggleClass('selected');
         numRolesSel = tabla.rows('.selected').data().length;
-        if (numRolesSel!=0){
+        if (numRolesSel != 0){
             $('#roles_sel').text(numRolesSel +' rol(es) seleccionado(s)');
+            $('#btnEliminarSel').removeAttr('disabled');
         }else{
-            $('#roles_sel').text("")
+            $('#roles_sel').text('');
+            $('#btnEliminarSel').attr('disabled','true');
         }
     });
 
-    var filas, lista_pk, datos_json;
 
     $("#btnEliminarSel").on("click", function(){
-        filas = tabla.rows('.selected');//Tomo las filas que se han seleccionado
-        console.log(filas);
-        datos_json = filas.data();//obtengo sus datos como JSON
-        lista_pk = $.makeArray();
-        for (var i=0;i<datos_json.length;i++){//Guardo los pk en un arreglo para pasarlos por AJAX
-            lista_pk.push(datos_json[i].pk)
-        }
-
-        $('#deleteRolPago').html(
-            "<h6 class='alert-heading'>Está seguro de eliminar los siguientes Roles de Pago?</h6>" + detalleRolesDelete()
-        );
-
-        function detalleRolesDelete () {
-            var datosRoles="<ul>";
-            for (var i=0;i<numRolesSel;i++){
-                datosRoles+="<li >" + datos_json[i].fields.apellidos + " " + datos_json[i].fields.nombres + "</li>";
+        if (numRolesSel != 0) {//Si se ha seleccionado algún registro
+            filas = tabla.rows('.selected');//Tomo las filas que se han seleccionado
+            var datos_json = filas.data();//obtengo sus datos como JSON
+            lista_pk = $.makeArray();
+            for (var i=0;i<datos_json.length;i++){//Guardo los pk en un arreglo para pasarlos por AJAX
+                lista_pk.push(datos_json[i].pk);
             }
-            return datosRoles+"</ul>";
-        }
 
-        $('#deleteRolPagoModal').modal('show');
+            $('#deleteRolPago').html(
+                "<div class='alert alert-danger'>" +
+                    "<h6 class='alert-heading'>Está seguro de eliminar los siguientes Roles de Pago?</h6>" + detalleRolesRemove() +
+                "</div>"
+            );
+
+            function detalleRolesRemove () {
+                var datosRoles="<ul>";
+                for (var i=0;i<numRolesSel;i++){
+                    datosRoles+="<li >" + datos_json[i].fields.apellidos + " " + datos_json[i].fields.nombres + "</li>";
+                }
+                return datosRoles+"</ul>";
+            }
+
+            $('#deleteRolPagoModal').modal('show');
+        }else{
+            verMensajeModal("Por favor, debe seleccionar al menos un Rol de Pago.", "alert alert-warning");
+        }
     });
+
 
     $("#btnSiDelete").on("click", function(){
         $('#deleteRolPagoModal').modal('hide');
-        deletePersonas(lista_pk, filas);
-        verMensajeInfo("Los Roles de Pago se han eliminado con éxito.");
+        quitarRolesPago(lista_pk, filas);
     });
 
-    function verMensajeInfo(info) {
+
+    $('#btnGenerarRol').on("click", function () {
+        $('#newRolPagoModal').modal('show');
+    });
+
+
+    $("#btnGuardarRolPago").on("click", function(){
+        $('#newRolPagoModal').modal('hide');
+        var newRolPago = $.makeArray();
+        newRolPago.push($('#newCedula').val());
+        newRolPago.push($('#newSueldo').val());
+        newRolPago.push($('#newNombres').val());
+        newRolPago.push($('#newApellidos').val());
+        guardarRolPago(newRolPago);
+        //Mejorar lo siguiente
+        $('#newCedula').val("")
+        $('#newSueldo').val(0)
+        $('#newNombres').val("")
+        $('#newApellidos').val("")
+    });
+
+
+    function verMensajeModal(info, tipo) {
         $('#infoRolPago').html(
-            "<h6 class='alert-heading'>"+info+"</h6>"
+            "<div class='"+tipo+"'>" +
+                "<h6 class='alert-heading'>"+info+"</h6>" +
+            "</div>"
         );
         $('#infoRolPagoModal').modal('show');
     }

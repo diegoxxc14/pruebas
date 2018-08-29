@@ -136,27 +136,22 @@ def cal_total(valores_rol):    #Calcula el total de ingresos y egresos
 #     return render(request, template_name,{'personas':personas})
 
 
-from django.views.generic import ListView, DeleteView, TemplateView
+from django.views.generic import ListView, TemplateView
 from app_prestamo.models import *
 from django.core import serializers
 from django.http import HttpResponse
 import json
-# class ver_personas(ListView):
-#     model = Persona
-#     template_name = 'libros/DataTable.html'
-#     context_object_name = 'personas'
+from django.views.decorators.csrf import csrf_exempt
 
-class ver_personas(ListView):
+class listar_rolesPago(ListView):
     model = Person
     template_name = 'libros/DataTable.html'
     context_object_name = 'personas'
 
-class load_personas_ajax(TemplateView):
-
-    def get(self, request, *args, **kwargs):
-        list_personas = get_list_or_404(Person)
-        data = serializers.serialize('json',list_personas)
-        return HttpResponse(data, content_type='application/json')
+def cargar_rolesPago_ajax(request):
+    list_personas = get_list_or_404(Person)
+    data = serializers.serialize('json',list_personas)
+    return HttpResponse(data, content_type='application/json')
 
 class delete_persona_ajax(TemplateView):
 
@@ -169,13 +164,23 @@ class delete_persona_ajax(TemplateView):
         data = serializers.serialize('json',list_personas)
         return HttpResponse(data, content_type='application/json')
 
-class delete_personas_ajax(TemplateView):
 
-    def get(self, request, *args, **kwargs):
-        ids_per = json.loads(request.GET['pks'])#cargo el valor de GET como una lista
+@csrf_exempt #Directiva para que el {% csrf_token %} funcione con POST
+def remover_rolesPago_ajax(request):
+
+    if request.POST:
+        ids_per = json.loads(request.POST['pks'])#cargo el valor de POST como una lista
         personas_remove = Person.objects.filter(pk__in=ids_per)
         personas_remove.delete()
-
-        #list_personas = get_list_or_404(Person)
-        #data = serializers.serialize('json',list_personas)
         return HttpResponse(request)
+
+
+@csrf_exempt #Directiva para que el {% csrf_token %} funcione con POST
+def crear_rolPago_ajax(request):
+
+    if request.POST:
+        rol_pago = json.loads(request.POST['rol_pago'])  # cargo el valor de POST como una lista
+        persona_new = Person(cedula=rol_pago[0],sueldo=Decimal(rol_pago[1]), nombres=rol_pago[2], apellidos=rol_pago[3])
+        persona_new.save()
+        data = serializers.serialize('json',get_list_or_404(Person, pk=persona_new.id))
+        return HttpResponse(data, content_type='application/json')

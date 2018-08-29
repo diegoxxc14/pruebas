@@ -4,18 +4,12 @@
     <bookmark url="file://$PROJECT_DIR$/templates/libros/roles_generar.html" line="16" mnemonic="7" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8bf1d2a-d5c5-4510-ab5f-38c38fd5e7e7" name="Default" comment="Cambios al modelo y optimización con JQuery">
+    <list default="true" id="a8bf1d2a-d5c5-4510-ab5f-38c38fd5e7e7" name="Default" comment="Métodos de eliminar y crear Roles de Pago con JQuery, AJAX y Json.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_libros/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_libros/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_libros/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_libros/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_libros/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_libros/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_libros/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_libros/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_prestamo/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_prestamo/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_prestamo/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_prestamo/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_prestamo/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_prestamo/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/roles_pago_ajax.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/roles_pago_ajax.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/libros/DataTable.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/libros/DataTable.html" afterDir="false" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,7 +44,7 @@
     <session id="886169111">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="21" />
+          <entry key="project.closed" value="22" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.16" value="2" />
           <entry key="project.open.time.19" value="1" />
@@ -66,10 +60,11 @@
           <entry key="project.open.time.52" value="1" />
           <entry key="project.open.time.56" value="1" />
           <entry key="project.open.time.59" value="1" />
+          <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.63" value="1" />
           <entry key="project.open.time.8" value="1" />
           <entry key="project.open.time.83" value="1" />
-          <entry key="project.opened" value="23" />
+          <entry key="project.opened" value="24" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -78,7 +73,7 @@
           <entry key="html" value="13" />
           <entry key="js" value="3" />
           <entry key="json" value="2" />
-          <entry key="py" value="25" />
+          <entry key="py" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -86,26 +81,26 @@
           <entry key="HTML" value="13" />
           <entry key="JSON" value="2" />
           <entry key="JavaScript" value="3" />
-          <entry key="Python" value="25" />
+          <entry key="Python" value="26" />
           <entry key="UML" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Django Console" value="547" />
-          <entry key="dummy" value="47" />
-          <entry key="html" value="7563" />
-          <entry key="js" value="1310" />
-          <entry key="py" value="5595" />
-          <entry key="txt" value="136" />
+          <entry key="Django Console" value="564" />
+          <entry key="dummy" value="66" />
+          <entry key="html" value="8039" />
+          <entry key="js" value="2639" />
+          <entry key="py" value="6176" />
+          <entry key="txt" value="256" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="7567" />
-          <entry key="JavaScript" value="1306" />
-          <entry key="PLAIN_TEXT" value="183" />
-          <entry key="Python" value="6142" />
+          <entry key="HTML" value="8047" />
+          <entry key="JavaScript" value="2631" />
+          <entry key="PLAIN_TEXT" value="322" />
+          <entry key="Python" value="6740" />
         </counts>
       </usages-collector>
     </session>
@@ -118,33 +113,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_libros/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="15" column="90" selection-start-line="15" selection-start-column="90" selection-end-line="15" selection-end-column="90" />
+            <state relative-caret-position="230">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app_libros/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3168">
-              <caret line="174" selection-start-line="174" selection-end-line="174" />
-              <folding>
-                <element signature="e#0#45#0" expanded="true" />
-                <element signature="e#442#524#0" />
-                <element signature="e#596#830#0" />
-                <element signature="e#876#987#0" />
-                <element signature="e#1025#1413#0" />
-                <element signature="e#1493#1888#0" />
-                <marker date="1535431307234" expanded="true" signature="591:833" ph="..." />
-                <marker date="1535431307234" expanded="true" signature="1020:1891" ph="..." />
-                <marker date="1535431307234" expanded="true" signature="4117:4654" ph="..." />
-                <marker date="1535431307234" expanded="true" signature="4954:4961" ph="..." />
-                <marker date="1535431307234" expanded="true" signature="5520:5521" ph="..." />
-                <marker date="1535431307234" expanded="true" signature="5520:5522" ph="..." />
               </folding>
             </state>
           </provider>
@@ -153,8 +125,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/js/roles_pago_ajax.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="45" column="28" selection-start-line="45" selection-start-column="28" selection-end-line="45" selection-end-column="28" />
+            <state relative-caret-position="186">
+              <caret line="67" column="46" selection-start-line="67" selection-start-column="46" selection-end-line="67" selection-end-column="46" />
+              <folding>
+                <element signature="e#7685#7901#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -162,20 +137,30 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/libros/DataTable.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1440">
-              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-              <folding>
-                <element signature="e#2440#3360#0#HTML" />
-              </folding>
+            <state relative-caret-position="10">
+              <caret line="117" column="29" lean-forward="true" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/libros/libros_form.html">
+        <entry file="file://$PROJECT_DIR$/app_libros/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+            <state relative-caret-position="80">
+              <caret line="174" column="8" selection-start-line="174" selection-start-column="8" selection-end-line="174" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#45#0" expanded="true" />
+                <element signature="e#442#524#0" />
+                <element signature="e#596#830#0" />
+                <element signature="e#876#987#0" />
+                <element signature="e#1025#1413#0" />
+                <element signature="e#1493#1888#0" />
+                <marker date="1535561866438" expanded="true" signature="591:833" ph="..." />
+                <marker date="1535561866438" expanded="true" signature="1020:1891" ph="..." />
+                <marker date="1535561866438" expanded="true" signature="4117:4654" ph="..." />
+                <marker date="1535561866438" expanded="true" signature="4954:4961" ph="..." />
+                <marker date="1535561866438" expanded="true" signature="5285:5290" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -192,7 +177,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_prestamo/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="836">
+            <state relative-caret-position="356">
               <caret line="38" column="8" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="8" />
               <folding>
                 <marker date="1535344004360" expanded="true" signature="1201:1206" ph="..." />
@@ -205,7 +190,7 @@
         <entry file="file://$PROJECT_DIR$/app_libros/forms.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="572">
-              <caret line="29" selection-start-line="29" selection-end-line="33" selection-end-column="29" />
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
             </state>
           </provider>
         </entry>
@@ -213,7 +198,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/libros/roles_generar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
+            <state relative-caret-position="-54">
               <caret line="17" column="51" selection-start-line="17" selection-start-column="51" selection-end-line="17" selection-end-column="51" />
             </state>
           </provider>
@@ -234,6 +219,7 @@
     <findStrings>
       <find>per</find>
       <find>editPer</find>
+      <find>listar_rolesPago</find>
     </findStrings>
     <replaceStrings>
       <replace>rol</replace>
@@ -266,9 +252,9 @@
         <option value="$PROJECT_DIR$/app_prestamo/migrations/0001_Person.py" />
         <option value="$PROJECT_DIR$/app_prestamo/models.py" />
         <option value="$PROJECT_DIR$/templates/libros/editar_personal_modal.html" />
-        <option value="$PROJECT_DIR$/app_libros/urls.py" />
-        <option value="$PROJECT_DIR$/app_libros/views.py" />
         <option value="$PROJECT_DIR$/templates/libros/DataTable.html" />
+        <option value="$PROJECT_DIR$/app_libros/views.py" />
+        <option value="$PROJECT_DIR$/app_libros/urls.py" />
         <option value="$PROJECT_DIR$/static/js/roles_pago_ajax.js" />
       </list>
     </option>
@@ -280,10 +266,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="x" value="-7" />
+    <option name="width" value="565" />
+    <option name="height" value="735" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -340,7 +325,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="PostgreSQL" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../rrhh/humanresource" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -354,14 +339,14 @@
     </option>
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\diego\DjangoProjects\libros\static\js" />
+      <recent name="C:\Users\dpcuenca\Documents\DjangoProjects\libros\templates\libros" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\dpcuenca\Documents\DjangoProjects\libros\static\css" />
       <recent name="C:\Users\dpcuenca\Documents\DjangoProjects\libros\static\js" />
       <recent name="C:\Users\dpcuenca\Documents\DjangoProjects\libros\static" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\diego\DjangoProjects\libros\static\js" />
-      <recent name="C:\Users\dpcuenca\Documents\DjangoProjects\libros\templates\libros" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -479,10 +464,24 @@
       <option name="project" value="LOCAL" />
       <updated>1534872869652</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Aplicación de Ajax con JQuery">
+      <created>1535471551861</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1535471551861</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Aplicación de Ajax con JQuery 2">
+      <created>1535471803679</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1535471803679</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
-  <component name="TodoView">
+  <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -495,20 +494,20 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13086233" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11951589" />
       <window_info id="Structure" order="1" weight="0.24962178" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49546143" weight="0.3289689" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.71331316" visible="true" weight="0.2618658" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7118003" weight="0.25204584" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.48487142" weight="0.32569557" />
+      <window_info active="true" anchor="bottom" id="TODO" order="6" sideWeight="0.48487142" visible="true" weight="0.32569557" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49848714" weight="0.3289689" />
-      <window_info anchor="bottom" id="Python Console" order="8" sideWeight="0.4614221" weight="0.03764321" />
+      <window_info anchor="bottom" id="Python Console" order="8" sideWeight="0.45990923" weight="0.29296234" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.44553706" weight="0.30769232" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.28668684" side_tool="true" weight="0.27168575" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5400908" side_tool="true" weight="0.33060557" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -558,7 +557,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Cambios al modelo y adecuación de los templates." />
     <MESSAGE value="Cambios al modelo y optimización con JQuery" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cambios al modelo y optimización con JQuery" />
+    <MESSAGE value="Aplicación de Ajax con JQuery" />
+    <MESSAGE value="Aplicación de Ajax con JQuery 2" />
+    <MESSAGE value="Métodos de eliminar y crear Roles de Pago con JQuery, AJAX y Json." />
+    <option name="LAST_COMMIT_MESSAGE" value="Métodos de eliminar y crear Roles de Pago con JQuery, AJAX y Json." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -719,6 +721,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1688">
           <caret line="29" column="65" selection-start-line="29" selection-start-column="65" selection-end-line="29" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -743,34 +748,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_libros/urls.py">
+    <entry file="file://$PROJECT_DIR$/app_libros/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="15" column="90" selection-start-line="15" selection-start-column="90" selection-end-line="15" selection-end-column="90" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_libros/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3168">
-          <caret line="174" selection-start-line="174" selection-end-line="174" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-            <element signature="e#442#524#0" />
-            <element signature="e#596#830#0" />
-            <element signature="e#876#987#0" />
-            <element signature="e#1025#1413#0" />
-            <element signature="e#1493#1888#0" />
-            <marker date="1535431307234" expanded="true" signature="591:833" ph="..." />
-            <marker date="1535431307234" expanded="true" signature="1020:1891" ph="..." />
-            <marker date="1535431307234" expanded="true" signature="4117:4654" ph="..." />
-            <marker date="1535431307234" expanded="true" signature="4954:4961" ph="..." />
-            <marker date="1535431307234" expanded="true" signature="5520:5521" ph="..." />
-            <marker date="1535431307234" expanded="true" signature="5520:5522" ph="..." />
-          </folding>
+        <state relative-caret-position="572">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
@@ -781,16 +762,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/libros/periodo_ver.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app_prestamo/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="836">
+        <state relative-caret-position="356">
           <caret line="38" column="8" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="8" />
           <folding>
             <marker date="1535344004360" expanded="true" signature="1201:1206" ph="..." />
@@ -798,34 +772,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_libros/forms.py">
+    <entry file="file://$PROJECT_DIR$/templates/libros/roles_generar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="29" selection-start-line="29" selection-end-line="33" selection-end-column="29" />
+        <state relative-caret-position="-54">
+          <caret line="17" column="51" selection-start-line="17" selection-start-column="51" selection-end-line="17" selection-end-column="51" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/libros/roles_generar.html">
+    <entry file="file://$PROJECT_DIR$/templates/libros/periodo_ver.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="51" selection-start-line="17" selection-start-column="51" selection-end-line="17" selection-end-column="51" />
+        <state relative-caret-position="352">
+          <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_libros/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="174" column="8" selection-start-line="174" selection-start-column="8" selection-end-line="174" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+            <element signature="e#442#524#0" />
+            <element signature="e#596#830#0" />
+            <element signature="e#876#987#0" />
+            <element signature="e#1025#1413#0" />
+            <element signature="e#1493#1888#0" />
+            <marker date="1535561866438" expanded="true" signature="591:833" ph="..." />
+            <marker date="1535561866438" expanded="true" signature="1020:1891" ph="..." />
+            <marker date="1535561866438" expanded="true" signature="4117:4654" ph="..." />
+            <marker date="1535561866438" expanded="true" signature="4954:4961" ph="..." />
+            <marker date="1535561866438" expanded="true" signature="5285:5290" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/libros/DataTable.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1440">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="10">
+          <caret line="117" column="29" lean-forward="true" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_libros/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
           <folding>
-            <element signature="e#2440#3360#0#HTML" />
+            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/js/roles_pago_ajax.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="45" column="28" selection-start-line="45" selection-start-column="28" selection-end-line="45" selection-end-column="28" />
+        <state relative-caret-position="186">
+          <caret line="67" column="46" selection-start-line="67" selection-start-column="46" selection-end-line="67" selection-end-column="46" />
+          <folding>
+            <element signature="e#7685#7901#0" />
+          </folding>
         </state>
       </provider>
     </entry>
